@@ -69,3 +69,9 @@ Depois:
 2. Desenvolvedor cria branch com `scripts/start-task.ps1`.
 3. Commits e PRs mencionam `SA-xx`.
 4. Integracao GitHub + YouTrack mostra commits/PRs dentro da issue.
+
+## Criacao Automatica De Branch
+
+Este repositorio tambem possui um workflow GitHub Actions que consulta issues em `Ready for Dev` e cria branches automaticamente.
+
+Veja [auto-branch-youtrack.md](auto-branch-youtrack.md).

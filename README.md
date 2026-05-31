@@ -47,3 +47,5 @@ Para iniciar uma branch a partir de uma issue:
 ```powershell
 .\scripts\start-task.ps1 -IssueId SA-15 -Title "Gerar PDF das fichas por tela"
 ```
+
+Branches tambem podem ser criadas automaticamente a partir do YouTrack. Veja [docs/auto-branch-youtrack.md](docs/auto-branch-youtrack.md).

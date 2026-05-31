@@ -1,0 +1,30 @@
+name: YouTrack Create Branches
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  create-branches:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create branches from YouTrack issues
+        shell: pwsh
+        env:
+          YOUTRACK_BASE_URL: ${{ secrets.YOUTRACK_BASE_URL }}
+          YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
+          YOUTRACK_PROJECT_SHORT_NAME: SA
+          YOUTRACK_READY_STATE: Ready for Dev
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN_FOR_BRANCHES: ${{ secrets.BRANCH_BOT_TOKEN }}
+          BASE_BRANCH: main
+          BRANCH_TYPE: feature
+        run: ./automation/youtrack-github-branch/create-branches-from-youtrack.ps1

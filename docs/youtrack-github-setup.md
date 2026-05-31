@@ -62,3 +62,10 @@ Depois:
 - estado inicial;
 - links para branch/PR;
 - comentarios com resumo tecnico.
+
+## Fluxo De Pedido Recomendado
+
+1. Colega cria issue no YouTrack usando [modelo-issue-youtrack.md](modelo-issue-youtrack.md).
+2. Desenvolvedor cria branch com `scripts/start-task.ps1`.
+3. Commits e PRs mencionam `SA-xx`.
+4. Integracao GitHub + YouTrack mostra commits/PRs dentro da issue.

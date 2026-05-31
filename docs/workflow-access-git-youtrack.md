@@ -51,6 +51,12 @@ git pull
 git checkout -b feature/SA-15-gerar-fichas-pdf
 ```
 
+Ou use o script padronizado:
+
+```powershell
+.\scripts\start-task.ps1 -IssueId SA-15 -Title "Gerar fichas em PDF por tela"
+```
+
 4. Abra `sistema-acolhidos.accdb` no Access.
 5. Faça a alteração.
 6. Teste manualmente no Access.

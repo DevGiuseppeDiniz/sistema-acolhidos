@@ -35,3 +35,15 @@ git commit -m "SA-123 Ajusta geracao de fichas em PDF"
 ```
 
 Veja o fluxo completo em [docs/workflow-access-git-youtrack.md](docs/workflow-access-git-youtrack.md).
+
+## Pedidos Pelo YouTrack
+
+Pedidos de implementacao devem entrar pelo YouTrack no projeto `SA`.
+
+Use o modelo em [docs/modelo-issue-youtrack.md](docs/modelo-issue-youtrack.md) e siga o fluxo em [docs/fluxo-pedidos-youtrack-git.md](docs/fluxo-pedidos-youtrack-git.md).
+
+Para iniciar uma branch a partir de uma issue:
+
+```powershell
+.\scripts\start-task.ps1 -IssueId SA-15 -Title "Gerar PDF das fichas por tela"
+```

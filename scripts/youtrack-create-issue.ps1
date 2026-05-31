@@ -1,4 +1,4 @@
-param(
+﻿param(
     [Parameter(Mandatory = $true)]
     [string]$Summary,
 
@@ -15,7 +15,7 @@ $ErrorActionPreference = "Stop"
 
 if (-not $BaseUrl) { throw "Defina YOUTRACK_BASE_URL. Ex.: https://dev-giuseppediniz.youtrack.cloud" }
 if (-not $Token) { throw "Defina YOUTRACK_TOKEN com um token do YouTrack." }
-if (-not $ProjectShortName) { throw "Defina YOUTRACK_PROJECT_SHORT_NAME. Ex.: SA" }
+if (-not $ProjectShortName) { throw "Defina YOUTRACK_PROJECT_SHORT_NAME. Ex.: SIS" }
 
 $base = $BaseUrl.TrimEnd("/")
 $uri = "$base/api/issues?fields=id,idReadable,summary,description,project(shortName,name)"
@@ -38,3 +38,4 @@ $issue = Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body
 
 Write-Host "Issue criada: $($issue.idReadable) - $($issue.summary)"
 Write-Host "$base/issue/$($issue.idReadable)"
+

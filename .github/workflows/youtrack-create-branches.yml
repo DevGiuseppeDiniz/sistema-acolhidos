@@ -1,4 +1,4 @@
-name: YouTrack Create Branches
+﻿name: YouTrack Create Branches
 
 on:
   workflow_dispatch:
@@ -34,9 +34,9 @@ jobs:
         env:
           YOUTRACK_BASE_URL: ${{ secrets.YOUTRACK_BASE_URL }}
           YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
-          YOUTRACK_PROJECT_SHORT_NAME: SA
+          YOUTRACK_PROJECT_SHORT_NAME: SIS
           YOUTRACK_READY_STATE: ${{ inputs.ready_state || 'Ready for Dev' }}
-          YOUTRACK_QUERY: "in: SA State: {${{ inputs.ready_state || 'Ready for Dev' }}}"
+          YOUTRACK_QUERY: "in: SIS State: {${{ inputs.ready_state || 'Ready for Dev' }}}"
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN_FOR_BRANCHES: ${{ github.token }}
           BASE_BRANCH: main
@@ -52,3 +52,4 @@ jobs:
           path: _youtrack_payload/**
           if-no-files-found: ignore
           retention-days: 30
+

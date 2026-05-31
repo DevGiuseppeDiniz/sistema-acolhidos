@@ -1,4 +1,4 @@
-# Modelo De Issue YouTrack
+﻿# Modelo De Issue YouTrack
 
 Copie e cole este modelo na descricao da issue.
 
@@ -21,7 +21,7 @@ Telas/relatorios envolvidos:
 Regras de negocio:
 - 
 
-Critérios de aceite:
+CritÃ©rios de aceite:
 - 
 - 
 - 
@@ -32,7 +32,7 @@ Impacto esperado:
 Arquivos ou prints anexados:
 - 
 
-Observações:
+ObservaÃ§Ãµes:
 
 ```
 
@@ -60,7 +60,7 @@ Regras de negocio:
 - Usar somente os nomes exibidos na Lista64.
 - Nao alterar a consulta base do relatorio.
 
-Critérios de aceite:
+CritÃ©rios de aceite:
 - Gera PDF sem erro.
 - Pasta por tela criada automaticamente.
 - Pasta por data criada automaticamente.
@@ -69,3 +69,4 @@ Critérios de aceite:
 Impacto esperado:
 Facilitar emissao de fichas por tipo de consulta.
 ```
+

@@ -1,4 +1,4 @@
-# Automacao: Card YouTrack -> Branch GitHub
+﻿# Automacao: Card YouTrack -> Branch GitHub
 
 Esta automacao cria branches no GitHub automaticamente para cards do YouTrack que estejam prontos para desenvolvimento.
 
@@ -32,7 +32,7 @@ https://dev-giuseppediniz.youtrack.cloud
 
 Token do YouTrack com permissao para:
 
-- ler issues do projeto `SA`;
+- ler issues do projeto `SIS`;
 - comentar em issues.
 
 Nao e necessario criar secret GitHub para branch. O workflow usa o `github.token`
@@ -43,27 +43,27 @@ nativo do GitHub Actions com permissao `contents: write`.
 No workflow:
 
 ```yaml
-YOUTRACK_PROJECT_SHORT_NAME: SA
+YOUTRACK_PROJECT_SHORT_NAME: SIS
 YOUTRACK_READY_STATE: Ready for Dev
-YOUTRACK_QUERY: "in: SA State: {Ready for Dev}"
+YOUTRACK_QUERY: "in: SIS State: {Ready for Dev}"
 BASE_BRANCH: main
 BRANCH_TYPE: feature
 ```
 
-Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE` e a query para `in: SA State: {Pronto para Desenvolvimento}`.
+Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE` e a query para `in: SIS State: {Pronto para Desenvolvimento}`.
 
 ## Padrao De Branch
 
 Para uma issue:
 
 ```text
-SA-15 Gerar PDF das fichas por tela
+SIS-15 Gerar PDF das fichas por tela
 ```
 
 A branch criada sera:
 
 ```text
-feature/SA-15-gerar-pdf-das-fichas-por-tela
+feature/SIS-15-gerar-pdf-das-fichas-por-tela
 ```
 
 ## Como Testar Manualmente
@@ -97,3 +97,4 @@ O script ignora issues cuja branch ja exista.
 - O script nao muda o estado da issue depois de criar a branch.
 - O script nao cria Pull Request.
 - O script depende do nome exato do estado configurado em `YOUTRACK_READY_STATE`.
+

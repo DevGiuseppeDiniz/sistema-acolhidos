@@ -1,4 +1,4 @@
-# Fluxo Com Base Anexada E Release
+﻿# Fluxo Com Base Anexada E Release
 
 Este fluxo foi desenhado para que a pessoa que solicita mudancas use apenas o YouTrack.
 
@@ -18,7 +18,7 @@ Solicitante cria card no YouTrack
 
 ## Para O Solicitante
 
-1. Criar card no projeto `SA`.
+1. Criar card no projeto `SIS`.
 2. Preencher o descritivo.
 3. Anexar a base `.accdb` ou `.zip`.
 4. Nao mexer em Git.
@@ -36,7 +36,7 @@ Mover para `Ready for Dev` apenas quando:
 O workflow `YouTrack Create Branches`:
 
 - procura issues no estado `Ready for Dev`;
-- cria branch `feature/SA-xx-titulo`;
+- cria branch `feature/SIS-xx-titulo`;
 - baixa anexos `.accdb`, `.accde`, `.zip` e `.7z`;
 - publica esses anexos como artifact do GitHub Actions por 30 dias;
 - comenta no YouTrack com link da branch e do workflow.
@@ -61,7 +61,7 @@ Importante: a base anexada nao entra no Git.
 
 ```powershell
 git add vba_export
-git commit -m "SA-xx Implementa pedido"
+git commit -m "SIS-xx Implementa pedido"
 git push
 ```
 
@@ -76,7 +76,7 @@ $env:YOUTRACK_BASE_URL = "https://dev-giuseppediniz.youtrack.cloud"
 $env:YOUTRACK_TOKEN = "<token youtrack>"
 
 .\scripts\publish-release.ps1 `
-  -IssueId SA-15 `
+  -IssueId SIS-15 `
   -Version 2026.05.31.1 `
   -DatabasePath .\sistema-acolhidos.accdb
 ```
@@ -108,3 +108,4 @@ Se houver ajuste:
 ```text
 Ajustes Solicitados
 ```
+

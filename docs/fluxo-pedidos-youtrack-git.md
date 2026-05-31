@@ -1,4 +1,4 @@
-# Fluxo De Pedidos: YouTrack -> Git
+﻿# Fluxo De Pedidos: YouTrack -> Git
 
 Este fluxo permite que uma pessoa sem conhecimento profundo de Git/Access registre pedidos no YouTrack, e que a implementacao fique rastreavel no GitHub.
 
@@ -6,10 +6,10 @@ Este fluxo permite que uma pessoa sem conhecimento profundo de Git/Access regist
 
 O YouTrack e a entrada oficial de pedidos.
 
-Todo pedido deve virar uma issue no projeto `SA`, por exemplo:
+Todo pedido deve virar uma issue no projeto `SIS`, por exemplo:
 
 ```text
-SA-15 Gerar PDF das fichas por tela
+SIS-15 Gerar PDF das fichas por tela
 ```
 
 ## Papel Do GitHub
@@ -23,7 +23,7 @@ O GitHub registra a implementacao:
 
 ## Como O Colega Deve Abrir Um Pedido
 
-No YouTrack, criar uma issue no projeto `SA` com:
+No YouTrack, criar uma issue no projeto `SIS` com:
 
 ### Titulo
 
@@ -55,12 +55,12 @@ Telas/relatorios envolvidos:
 - Cadastro de Acolhido
 - Fichas de Acompanhamento
 
-Critérios de aceite:
-- Ao clicar no botão X, o sistema deve...
+CritÃ©rios de aceite:
+- Ao clicar no botÃ£o X, o sistema deve...
 - O arquivo deve ser salvo em...
-- Não deve alterar...
+- NÃ£o deve alterar...
 
-Observações:
+ObservaÃ§Ãµes:
 Inclua prints, exemplos ou regras especificas.
 ```
 
@@ -79,13 +79,13 @@ Se existirem no projeto:
 Depois que a issue existir, use o numero dela para criar a branch:
 
 ```powershell
-.\scripts\start-task.ps1 -IssueId SA-15 -Title "Gerar PDF das fichas filtradas pela tela atual"
+.\scripts\start-task.ps1 -IssueId SIS-15 -Title "Gerar PDF das fichas filtradas pela tela atual"
 ```
 
 Isso cria uma branch no padrao:
 
 ```text
-feature/SA-15-gerar-pdf-das-fichas-filtradas-pela-tela-atual
+feature/SIS-15-gerar-pdf-das-fichas-filtradas-pela-tela-atual
 ```
 
 ## Como Commitar
@@ -93,7 +93,7 @@ feature/SA-15-gerar-pdf-das-fichas-filtradas-pela-tela-atual
 Todo commit deve mencionar a issue:
 
 ```powershell
-git commit -m "SA-15 Gera PDF das fichas por tela"
+git commit -m "SIS-15 Gera PDF das fichas por tela"
 ```
 
 ## Como Abrir Pull Request
@@ -102,13 +102,13 @@ O Pull Request deve ter:
 
 ```text
 Titulo:
-SA-15 Gera PDF das fichas por tela
+SIS-15 Gera PDF das fichas por tela
 
 Descricao:
-Closes SA-15
+Closes SIS-15
 
 Resumo:
-- Centraliza a rotina de geração das fichas.
+- Centraliza a rotina de geraÃ§Ã£o das fichas.
 - Gera PDF em pasta por tela e data.
 
 Testes:
@@ -123,19 +123,19 @@ O vinculo acontece por tres lugares:
 1. Nome da branch:
 
 ```text
-feature/SA-15-gerar-pdf
+feature/SIS-15-gerar-pdf
 ```
 
 2. Mensagem do commit:
 
 ```text
-SA-15 Gera PDF das fichas
+SIS-15 Gera PDF das fichas
 ```
 
 3. Descricao do PR:
 
 ```text
-Closes SA-15
+Closes SIS-15
 ```
 
 Quando a integracao GitHub + YouTrack estiver ativa, o YouTrack tambem passa a mostrar commits e PRs ligados a issue.
@@ -155,5 +155,6 @@ Antes de concluir:
 - Access testado.
 - `.\scripts\export-access.ps1` executado.
 - `git diff` revisado.
-- Commit menciona `SA-xx`.
-- PR menciona `SA-xx`.
+- Commit menciona `SIS-xx`.
+- PR menciona `SIS-xx`.
+

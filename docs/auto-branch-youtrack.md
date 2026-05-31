@@ -78,7 +78,9 @@ feature/SIS-15-gerar-pdf-das-fichas-por-tela
 8. Rode novamente com `dry_run = false`.
 9. Confira se a branch apareceu em `Code > Branches`.
 10. Confira se o artifact `youtrack-base-attachments` apareceu, caso o card tenha `.accdb`/`.zip`.
-11. Confira se a issue recebeu um comentario com o link da branch.
+11. Confira se o artifact `access-diff-analysis` apareceu.
+12. Abra `summary.md` dentro do artifact para revisar diferencas.
+13. Confira se a issue recebeu um comentario com o link da branch.
 
 ## Evitar Branches Para Pedidos Incompletos
 

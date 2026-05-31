@@ -39,6 +39,8 @@ O workflow `YouTrack Create Branches`:
 - cria branch `feature/SIS-xx-titulo`;
 - baixa anexos `.accdb`, `.accde`, `.zip` e `.7z`;
 - publica esses anexos como artifact do GitHub Actions por 30 dias;
+- tenta extrair bases Access anexadas e gerar diff contra `vba_export`;
+- publica o artifact `access-diff-analysis` com `summary.md`, exports e diffs;
 - comenta no YouTrack com link da branch e do workflow.
 
 Importante: a base anexada nao entra no Git.
@@ -47,17 +49,19 @@ Importante: a base anexada nao entra no Git.
 
 1. Abrir a action run comentada no YouTrack.
 2. Baixar o artifact `youtrack-base-attachments`.
-3. Copiar a base para uma pasta local de trabalho.
-4. Fazer backup da base atual.
-5. Comparar/incorporar alteracoes manualmente no Access, quando necessario.
-6. Implementar na branch criada.
-7. Rodar:
+3. Baixar o artifact `access-diff-analysis`.
+4. Abrir `summary.md` para ver objetos adicionados, alterados e removidos.
+5. Copiar a base para uma pasta local de trabalho.
+6. Fazer backup da base atual.
+7. Comparar/incorporar alteracoes manualmente no Access, quando necessario.
+8. Implementar na branch criada.
+9. Rodar:
 
 ```powershell
 .\scripts\export-access.ps1
 ```
 
-8. Commitar:
+10. Commitar:
 
 ```powershell
 git add vba_export

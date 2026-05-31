@@ -1,0 +1,22 @@
+# Access binaries and lock files
+*.accdb
+*.accde
+*.laccdb
+*.ldb
+
+# Generated/private outputs
+Relatorios_Fichas/
+Backups - Controle Acolhidos/
+access_analysis/
+
+# Local/editor files
+.vscode/
+.idea/
+*.tmp
+*.bak
+~$*
+
+# Keep exported source files versioned:
+# vba_export/
+# docs/
+# scripts/

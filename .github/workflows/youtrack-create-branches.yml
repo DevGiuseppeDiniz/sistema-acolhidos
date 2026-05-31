@@ -7,6 +7,10 @@ on:
         description: "Nome exato do estado no YouTrack"
         required: false
         default: "Ready for Dev"
+      youtrack_query:
+        description: "Query completa do YouTrack"
+        required: false
+        default: "project: {sistema-acolhidos} State: {Ready for Dev}"
       dry_run:
         description: "Validar sem criar branches"
         required: false
@@ -36,7 +40,7 @@ jobs:
           YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
           YOUTRACK_PROJECT_SHORT_NAME: SIS
           YOUTRACK_READY_STATE: ${{ inputs.ready_state || 'Ready for Dev' }}
-          YOUTRACK_QUERY: "in: SIS State: {${{ inputs.ready_state || 'Ready for Dev' }}}"
+          YOUTRACK_QUERY: ${{ inputs.youtrack_query || 'project: {sistema-acolhidos} State: {Ready for Dev}' }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN_FOR_BRANCHES: ${{ github.token }}
           BASE_BRANCH: main

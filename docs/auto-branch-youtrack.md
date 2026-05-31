@@ -45,12 +45,12 @@ No workflow:
 ```yaml
 YOUTRACK_PROJECT_SHORT_NAME: SIS
 YOUTRACK_READY_STATE: Ready for Dev
-YOUTRACK_QUERY: "in: SIS State: {Ready for Dev}"
+YOUTRACK_QUERY: "project: {sistema-acolhidos} State: {Ready for Dev}"
 BASE_BRANCH: main
 BRANCH_TYPE: feature
 ```
 
-Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE` e a query para `in: SIS State: {Pronto para Desenvolvimento}`.
+Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE` e a query para `project: {sistema-acolhidos} State: {Pronto para Desenvolvimento}`.
 
 ## Padrao De Branch
 
@@ -73,11 +73,12 @@ feature/SIS-15-gerar-pdf-das-fichas-por-tela
 3. No GitHub, abra `Actions`.
 4. Rode o workflow `YouTrack Create Branches` manualmente.
 5. Primeiro rode com `dry_run = true`.
-6. Confira no log se a issue foi encontrada e qual branch seria criada.
-7. Rode novamente com `dry_run = false`.
-8. Confira se a branch apareceu em `Code > Branches`.
-9. Confira se o artifact `youtrack-base-attachments` apareceu, caso o card tenha `.accdb`/`.zip`.
-10. Confira se a issue recebeu um comentario com o link da branch.
+6. Use a query padrao `project: {sistema-acolhidos} State: {Ready for Dev}`.
+7. Confira no log se a issue foi encontrada e qual branch seria criada.
+8. Rode novamente com `dry_run = false`.
+9. Confira se a branch apareceu em `Code > Branches`.
+10. Confira se o artifact `youtrack-base-attachments` apareceu, caso o card tenha `.accdb`/`.zip`.
+11. Confira se a issue recebeu um comentario com o link da branch.
 
 ## Evitar Branches Para Pedidos Incompletos
 

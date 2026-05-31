@@ -42,3 +42,12 @@ jobs:
           BRANCH_TYPE: feature
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: ./automation/youtrack-github-branch/create-branches-from-youtrack.ps1
+
+      - name: Upload YouTrack base attachments
+        if: ${{ inputs.dry_run == 'false' || github.event_name == 'schedule' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtrack-base-attachments
+          path: _youtrack_payload/**
+          if-no-files-found: ignore
+          retention-days: 30

@@ -7,7 +7,10 @@ param(
     [string]$BaseBranch = $env:BASE_BRANCH,
     [string]$ReadyState = $env:YOUTRACK_READY_STATE,
     [string]$BranchType = $env:BRANCH_TYPE,
-    [string]$DryRun = $env:DRY_RUN
+    [string]$DryRun = $env:DRY_RUN,
+    [string]$Workspace = $env:GITHUB_WORKSPACE,
+    [string]$GitHubRunId = $env:GITHUB_RUN_ID,
+    [string]$GitHubServerUrl = $env:GITHUB_SERVER_URL
 )
 
 $ErrorActionPreference = "Stop"
@@ -21,7 +24,11 @@ if (-not $BaseBranch) { $BaseBranch = "main" }
 if (-not $ReadyState) { $ReadyState = "Ready for Dev" }
 if (-not $BranchType) { $BranchType = "feature" }
 if (-not $DryRun) { $DryRun = "false" }
+if (-not $Workspace) { $Workspace = (Get-Location).Path }
+if (-not $GitHubServerUrl) { $GitHubServerUrl = "https://github.com" }
 $isDryRun = $DryRun.ToLowerInvariant() -in @("1", "true", "yes", "sim")
+$payloadRoot = Join-Path $Workspace "_youtrack_payload"
+New-Item -ItemType Directory -Force -Path $payloadRoot | Out-Null
 
 function Convert-ToSlug([string]$value) {
     $normalized = $value.ToLowerInvariant()
@@ -56,6 +63,15 @@ function Invoke-YouTrackApi(
         return Invoke-RestMethod -Method $Method -Uri $uri -Headers $headers -Body $json
     }
     return Invoke-RestMethod -Method $Method -Uri $uri -Headers $headers
+}
+
+function Download-YouTrackFile([string]$RelativeUrl, [string]$DestinationPath) {
+    $headers = @{
+        Authorization = "Bearer $YouTrackToken"
+        Accept = "application/octet-stream"
+    }
+    $uri = $YouTrackBaseUrl.TrimEnd("/") + $RelativeUrl
+    Invoke-WebRequest -Uri $uri -Headers $headers -OutFile $DestinationPath
 }
 
 function Invoke-GitHubApi(
@@ -110,7 +126,7 @@ Write-Host "Dry run: $isDryRun"
 
 $query = "project: $YouTrackProject State: {$ReadyState}"
 $encodedQuery = [System.Uri]::EscapeDataString($query)
-$fields = "id,idReadable,summary,customFields(name,value(name,localizedName))"
+$fields = "id,idReadable,summary,customFields(name,value(name,localizedName)),attachments(id,name,size,extension,mimeType,url)"
 $issues = Invoke-YouTrackApi -Method "Get" -Path "/api/issues?query=$encodedQuery&fields=$fields&`$top=25"
 
 if (-not $issues -or $issues.Count -eq 0) {
@@ -126,7 +142,34 @@ $baseSha = $baseRef.object.sha
 foreach ($issue in $issues) {
     $issueId = $issue.idReadable
     $branchName = "$BranchType/$issueId-$(Convert-ToSlug $issue.summary)"
+    $issuePayloadDir = Join-Path $payloadRoot $issueId
     Write-Host "Processando $issueId => $branchName"
+
+    $baseAttachments = @()
+    foreach ($attachment in $issue.attachments) {
+        $extension = ([string]$attachment.extension).ToLowerInvariant()
+        if ($extension -in @("accdb", "accde", "zip", "7z")) {
+            $baseAttachments += $attachment
+        }
+    }
+
+    if ($baseAttachments.Count -eq 0) {
+        Write-Host "Aviso: $issueId nao possui anexo .accdb/.accde/.zip/.7z."
+    }
+    else {
+        New-Item -ItemType Directory -Force -Path $issuePayloadDir | Out-Null
+        foreach ($attachment in $baseAttachments) {
+            $safeName = $attachment.name -replace '[\\/:*?"<>|]', '_'
+            $dest = Join-Path $issuePayloadDir $safeName
+            if ($isDryRun) {
+                Write-Host "Dry run: baixaria anexo $($attachment.name) para $dest"
+            }
+            else {
+                Download-YouTrackFile -RelativeUrl $attachment.url -DestinationPath $dest
+                Write-Host "Anexo baixado: $dest"
+            }
+        }
+    }
 
     if (Test-BranchExists $branchName) {
         Write-Host "Branch ja existe: $branchName"
@@ -146,8 +189,13 @@ foreach ($issue in $issues) {
     Invoke-GitHubApi -Method "Post" -Path "/repos/$GitHubRepository/git/refs" -Body $body | Out-Null
 
     $branchUrl = "https://github.com/$GitHubRepository/tree/$branchName"
+    $runUrl = if ($GitHubRunId) { "$GitHubServerUrl/$GitHubRepository/actions/runs/$GitHubRunId" } else { "" }
+    $text = "Branch criada automaticamente para desenvolvimento: [$branchName]($branchUrl)"
+    if ($runUrl) {
+        $text += "`n`nBase anexada, quando houver, foi baixada como artifact do workflow: $runUrl"
+    }
     $commentBody = @{
-        text = "Branch criada automaticamente para desenvolvimento: [$branchName]($branchUrl)"
+        text = $text
     }
     Invoke-YouTrackApi -Method "Post" -Path "/api/issues/$issueId/comments?fields=id,text" -Body $commentBody | Out-Null
 

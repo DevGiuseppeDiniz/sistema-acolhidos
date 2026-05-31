@@ -49,3 +49,5 @@ Para iniciar uma branch a partir de uma issue:
 ```
 
 Branches tambem podem ser criadas automaticamente a partir do YouTrack. Veja [docs/auto-branch-youtrack.md](docs/auto-branch-youtrack.md).
+
+Para o fluxo com base `.accdb` anexada no card e entrega por release, veja [docs/fluxo-base-anexada-release.md](docs/fluxo-base-anexada-release.md).

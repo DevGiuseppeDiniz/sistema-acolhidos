@@ -9,7 +9,8 @@ Colega cria card no YouTrack
   -> voce revisa e muda State para "Ready for Dev"
   -> GitHub Actions roda a cada 30 minutos ou manualmente
   -> branch e criada no GitHub
-  -> comentario e adicionado no card com link da branch
+  -> anexos de base sao baixados como artifact
+  -> comentario e adicionado no card com link da branch e do workflow
 ```
 
 ## Arquivos
@@ -74,7 +75,8 @@ feature/SA-15-gerar-pdf-das-fichas-por-tela
 6. Confira no log se a issue foi encontrada e qual branch seria criada.
 7. Rode novamente com `dry_run = false`.
 8. Confira se a branch apareceu em `Code > Branches`.
-9. Confira se a issue recebeu um comentario com o link da branch.
+9. Confira se o artifact `youtrack-base-attachments` apareceu, caso o card tenha `.accdb`/`.zip`.
+10. Confira se a issue recebeu um comentario com o link da branch.
 
 ## Evitar Branches Para Pedidos Incompletos
 

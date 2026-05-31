@@ -126,7 +126,7 @@ Write-Host "Branch base: $BaseBranch"
 Write-Host "Dry run: $isDryRun"
 
 if (-not $YouTrackQuery) {
-    $YouTrackQuery = "in: $YouTrackProject State: {$ReadyState}"
+    $YouTrackQuery = "project: {sistema-acolhidos} State: {$ReadyState}"
 }
 
 Write-Host "Query YouTrack: $YouTrackQuery"

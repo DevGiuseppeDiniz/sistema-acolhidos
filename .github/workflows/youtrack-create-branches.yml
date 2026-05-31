@@ -39,17 +39,16 @@ jobs:
           YOUTRACK_BASE_URL: ${{ secrets.YOUTRACK_BASE_URL }}
           YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
           YOUTRACK_PROJECT_SHORT_NAME: SIS
-          YOUTRACK_READY_STATE: ${{ inputs.ready_state || 'Ready for Dev' }}
-          YOUTRACK_QUERY: ${{ inputs.youtrack_query || 'project: {sistema-acolhidos} State: {Ready for Dev}' }}
+          YOUTRACK_READY_STATE: ${{ github.event.inputs.ready_state }}
+          YOUTRACK_QUERY: ${{ github.event.inputs.youtrack_query }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN_FOR_BRANCHES: ${{ github.token }}
           BASE_BRANCH: main
           BRANCH_TYPE: feature
-          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: ./automation/youtrack-github-branch/create-branches-from-youtrack.ps1
 
       - name: Upload YouTrack base attachments
-        if: ${{ inputs.dry_run == 'false' || github.event_name == 'schedule' }}
         uses: actions/upload-artifact@v4
         with:
           name: youtrack-base-attachments

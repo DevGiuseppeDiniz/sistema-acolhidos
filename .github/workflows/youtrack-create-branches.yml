@@ -36,6 +36,7 @@ jobs:
           YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
           YOUTRACK_PROJECT_SHORT_NAME: SA
           YOUTRACK_READY_STATE: ${{ inputs.ready_state || 'Ready for Dev' }}
+          YOUTRACK_QUERY: "in: SA State: {${{ inputs.ready_state || 'Ready for Dev' }}}"
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN_FOR_BRANCHES: ${{ github.token }}
           BASE_BRANCH: main

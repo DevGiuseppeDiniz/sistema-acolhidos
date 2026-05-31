@@ -8,6 +8,7 @@ param(
     [string]$ReadyState = $env:YOUTRACK_READY_STATE,
     [string]$BranchType = $env:BRANCH_TYPE,
     [string]$DryRun = $env:DRY_RUN,
+    [string]$YouTrackQuery = $env:YOUTRACK_QUERY,
     [string]$Workspace = $env:GITHUB_WORKSPACE,
     [string]$GitHubRunId = $env:GITHUB_RUN_ID,
     [string]$GitHubServerUrl = $env:GITHUB_SERVER_URL
@@ -124,7 +125,13 @@ Write-Host "Estado pesquisado: $ReadyState"
 Write-Host "Branch base: $BaseBranch"
 Write-Host "Dry run: $isDryRun"
 
-$query = "project: $YouTrackProject State: {$ReadyState}"
+if (-not $YouTrackQuery) {
+    $YouTrackQuery = "in: $YouTrackProject State: {$ReadyState}"
+}
+
+Write-Host "Query YouTrack: $YouTrackQuery"
+
+$query = $YouTrackQuery
 $encodedQuery = [System.Uri]::EscapeDataString($query)
 $fields = "id,idReadable,summary,customFields(name,value(name,localizedName)),attachments(id,name,size,extension,mimeType,url)"
 $issues = Invoke-YouTrackApi -Method "Get" -Path "/api/issues?query=$encodedQuery&fields=$fields&`$top=25"

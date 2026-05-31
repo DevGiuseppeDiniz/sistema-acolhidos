@@ -3,6 +3,9 @@
 *.accde
 *.laccdb
 *.ldb
+*.zip
+*.rar
+*.7z
 
 # Generated/private outputs
 Relatorios_Fichas/

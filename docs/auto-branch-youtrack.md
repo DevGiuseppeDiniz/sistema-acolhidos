@@ -45,11 +45,12 @@ No workflow:
 ```yaml
 YOUTRACK_PROJECT_SHORT_NAME: SA
 YOUTRACK_READY_STATE: Ready for Dev
+YOUTRACK_QUERY: "in: SA State: {Ready for Dev}"
 BASE_BRANCH: main
 BRANCH_TYPE: feature
 ```
 
-Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE`.
+Se o estado no YouTrack estiver em portugues, por exemplo `Pronto para Desenvolvimento`, altere `YOUTRACK_READY_STATE` e a query para `in: SA State: {Pronto para Desenvolvimento}`.
 
 ## Padrao De Branch
 

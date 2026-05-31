@@ -6,7 +6,8 @@ param(
     [string]$GitHubToken = $env:GITHUB_TOKEN_FOR_BRANCHES,
     [string]$BaseBranch = $env:BASE_BRANCH,
     [string]$ReadyState = $env:YOUTRACK_READY_STATE,
-    [string]$BranchType = $env:BRANCH_TYPE
+    [string]$BranchType = $env:BRANCH_TYPE,
+    [string]$DryRun = $env:DRY_RUN
 )
 
 $ErrorActionPreference = "Stop"
@@ -19,6 +20,8 @@ if (-not $GitHubToken) { throw "GITHUB_TOKEN_FOR_BRANCHES nao definido." }
 if (-not $BaseBranch) { $BaseBranch = "main" }
 if (-not $ReadyState) { $ReadyState = "Ready for Dev" }
 if (-not $BranchType) { $BranchType = "feature" }
+if (-not $DryRun) { $DryRun = "false" }
+$isDryRun = $DryRun.ToLowerInvariant() -in @("1", "true", "yes", "sim")
 
 function Convert-ToSlug([string]$value) {
     $normalized = $value.ToLowerInvariant()
@@ -99,14 +102,23 @@ function Test-BranchExists([string]$branchName) {
     }
 }
 
-$encodedQuery = [System.Web.HttpUtility]::UrlEncode("project: $YouTrackProject State: {$ReadyState}")
+Write-Host "Repositorio GitHub: $GitHubRepository"
+Write-Host "Projeto YouTrack: $YouTrackProject"
+Write-Host "Estado pesquisado: $ReadyState"
+Write-Host "Branch base: $BaseBranch"
+Write-Host "Dry run: $isDryRun"
+
+$query = "project: $YouTrackProject State: {$ReadyState}"
+$encodedQuery = [System.Uri]::EscapeDataString($query)
 $fields = "id,idReadable,summary,customFields(name,value(name,localizedName))"
 $issues = Invoke-YouTrackApi -Method "Get" -Path "/api/issues?query=$encodedQuery&fields=$fields&`$top=25"
 
 if (-not $issues -or $issues.Count -eq 0) {
-    Write-Host "Nenhuma issue pronta para dev encontrada."
+    Write-Host "Nenhuma issue encontrada para a busca: $query"
     exit 0
 }
+
+Write-Host "Issues encontradas: $($issues.Count)"
 
 $baseRef = Invoke-GitHubApi -Method "Get" -Path "/repos/$GitHubRepository/git/ref/heads/$BaseBranch"
 $baseSha = $baseRef.object.sha
@@ -114,9 +126,15 @@ $baseSha = $baseRef.object.sha
 foreach ($issue in $issues) {
     $issueId = $issue.idReadable
     $branchName = "$BranchType/$issueId-$(Convert-ToSlug $issue.summary)"
+    Write-Host "Processando $issueId => $branchName"
 
     if (Test-BranchExists $branchName) {
         Write-Host "Branch ja existe: $branchName"
+        continue
+    }
+
+    if ($isDryRun) {
+        Write-Host "Dry run: criaria a branch $branchName a partir de $BaseBranch ($baseSha)"
         continue
     }
 

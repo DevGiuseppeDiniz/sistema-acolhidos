@@ -35,7 +35,7 @@ https://github.com/DevGiuseppeDiniz/sistema-acolhidos
 5. Autorize acesso ao repositorio `DevGiuseppeDiniz/sistema-acolhidos`.
 6. Configure o mapeamento para reconhecer issue ids como `SA-123`.
 
-## Token Para Automacoes
+## Token Para Automacoes YouTrack
 
 Crie um token permanente ou token de app com permissao para criar issues no projeto `SA`.
 
@@ -44,6 +44,9 @@ Nunca commitar o token. Use variavel de ambiente:
 ```powershell
 $env:YOUTRACK_TOKEN = "perm:..."
 ```
+
+Para o workflow de criacao automatica de branches, o GitHub usa o token nativo
+da action. Nao e necessario cadastrar token GitHub separado.
 
 ## Campos Que Podemos Automatizar
 

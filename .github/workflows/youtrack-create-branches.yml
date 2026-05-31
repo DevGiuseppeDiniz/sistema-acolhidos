@@ -2,11 +2,24 @@ name: YouTrack Create Branches
 
 on:
   workflow_dispatch:
+    inputs:
+      ready_state:
+        description: "Nome exato do estado no YouTrack"
+        required: false
+        default: "Ready for Dev"
+      dry_run:
+        description: "Validar sem criar branches"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
   schedule:
     - cron: "*/30 * * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   create-branches:
@@ -22,9 +35,10 @@ jobs:
           YOUTRACK_BASE_URL: ${{ secrets.YOUTRACK_BASE_URL }}
           YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
           YOUTRACK_PROJECT_SHORT_NAME: SA
-          YOUTRACK_READY_STATE: Ready for Dev
+          YOUTRACK_READY_STATE: ${{ inputs.ready_state || 'Ready for Dev' }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_TOKEN_FOR_BRANCHES: ${{ secrets.BRANCH_BOT_TOKEN }}
+          GITHUB_TOKEN_FOR_BRANCHES: ${{ github.token }}
           BASE_BRANCH: main
           BRANCH_TYPE: feature
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: ./automation/youtrack-github-branch/create-branches-from-youtrack.ps1

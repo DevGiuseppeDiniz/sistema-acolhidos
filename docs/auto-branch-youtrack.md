@@ -34,15 +34,8 @@ Token do YouTrack com permissao para:
 - ler issues do projeto `SA`;
 - comentar em issues.
 
-### `BRANCH_BOT_TOKEN`
-
-Token GitHub com permissao para criar branches no repositorio.
-
-Opcoes:
-
-- Fine-grained personal access token;
-- Repository access: `DevGiuseppeDiniz/sistema-acolhidos`;
-- Permission: `Contents: Read and write`.
+Nao e necessario criar secret GitHub para branch. O workflow usa o `github.token`
+nativo do GitHub Actions com permissao `contents: write`.
 
 ## Configuracoes Da Automacao
 
@@ -77,8 +70,11 @@ feature/SA-15-gerar-pdf-das-fichas-por-tela
 2. Mude o estado para `Ready for Dev`.
 3. No GitHub, abra `Actions`.
 4. Rode o workflow `YouTrack Create Branches` manualmente.
-5. Confira se a branch apareceu em `Code > Branches`.
-6. Confira se a issue recebeu um comentario com o link da branch.
+5. Primeiro rode com `dry_run = true`.
+6. Confira no log se a issue foi encontrada e qual branch seria criada.
+7. Rode novamente com `dry_run = false`.
+8. Confira se a branch apareceu em `Code > Branches`.
+9. Confira se a issue recebeu um comentario com o link da branch.
 
 ## Evitar Branches Para Pedidos Incompletos
 

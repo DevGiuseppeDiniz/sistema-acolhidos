@@ -55,7 +55,7 @@ Public Sub GerarFichasAcompanhamentoDaLista(frmOrigem As Form)
         NOME_RELATORIO, _
         acFormatPDF, _
         strArquivo, _
-        False
+        True
 
     DoCmd.Close acReport, NOME_RELATORIO
 

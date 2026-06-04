@@ -1,0 +1,2 @@
+﻿SELECT CadastroAcolhidos.NomeAcolhido
+FROM CadastroAcolhidos;

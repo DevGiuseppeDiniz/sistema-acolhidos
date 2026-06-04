@@ -1,0 +1,2 @@
+﻿SELECT Count(ConsultaSEMVisitas6meses.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM ConsultaSEMVisitas6meses;

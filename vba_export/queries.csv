@@ -1,0 +1,163 @@
+﻿"Name","Type","SQL"
+"CadastroSEMDestituicao","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.NPedProv, CadastroAcolhidos.EntidadeAcolhimento, CadastroAcolhidos.DataAcolhimento, fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento]
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.NDestituicao) Is Null) AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Consulta Destituições em Andamento","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.DataInicioDest, CadastroAcolhidos.DataDestituição, CadastroAcolhidos.NDestituicao
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento) Is Null) AND ((CadastroAcolhidos.DataDestituição) Is Null) AND ((CadastroAcolhidos.NDestituicao) Is Not Null And (CadastroAcolhidos.NDestituicao)<>""""));
+"
+"Consulta Destituicoes sem Julgamento","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.DataInicioDest, CadastroAcolhidos.DiasTramitaDest
+FROM CadastroAcolhidos
+GROUP BY CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.DataInicioDest, CadastroAcolhidos.DiasTramitaDest, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.DataDestituição
+HAVING (((CadastroAcolhidos.NDestituicao)<>"""") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null) AND ((CadastroAcolhidos.DataDestituição) Is Null));
+"
+"Consulta Destituidos","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.PaiAcolhido, CadastroAcolhidos.EntidadeAcolhimento, CadastroAcolhidos.PeriodoAcolhimento, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.DataDestituição, CadastroAcolhidos.DataTransito, CadastroAcolhidos.AcolhidoDestituido, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.AcolhidoDestituido)=""sim"") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Consulta Destituidos com transito","0","SELECT [Consulta Destituidos].NomeAcolhido, [Consulta Destituidos].NomeAcolhido, [Consulta Destituidos].PaiAcolhido, [Consulta Destituidos].EntidadeAcolhimento, [Consulta Destituidos].PeriodoAcolhimento, [Consulta Destituidos].NDestituicao, [Consulta Destituidos].DataTransito, [Consulta Destituidos].AcolhidoDestituido, [Consulta Destituidos].DataDesacolhimento
+FROM [Consulta Destituidos]
+WHERE ((([Consulta Destituidos].DataTransito) Is Not Null) AND (([Consulta Destituidos].AcolhidoDestituido)=""sim"") AND (([Consulta Destituidos].DataDesacolhimento) Is Null));
+"
+"Consulta inseridos PARESCON","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.PARESCON, CadastroAcolhidos.NPedProv, CadastroAcolhidos.EntidadeAcolhimento
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.PARESCON)=""SIM"") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Consulta VISITAS INDEFERIDAS","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao, fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento], CadastroAcolhidos.DECVisitas, CadastroAcolhidos.AUTORIZAVisitas, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DECVisitas)=""SIM"") AND ((CadastroAcolhidos.AUTORIZAVisitas)=""NÃO"") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Consulta VISITAS SEM DECISAO","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao, fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento], CadastroAcolhidos.DECVisitas, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DECVisitas)=""NÃO"") AND ((CadastroAcolhidos.DataAcolhimento)<Date()-15) AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"ConsultaGERAL-Des-Acol","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos;
+"
+"ConsultaQuantosAcolhidosTODOS","0","SELECT ConsultaTodosAcolhidosEntidade.NomeAcolhido, ConsultaTodosAcolhidosEntidade.DataDesacolhimento
+FROM ConsultaTodosAcolhidosEntidade
+WHERE (((ConsultaTodosAcolhidosEntidade.DataDesacolhimento) Is Null));
+"
+"ConsultaSEMVisitas6meses","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.AUTORIZAVisitas, CadastroAcolhidos.DataDecidVisitas, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.DataDestituição, CadastroAcolhidos.NDestituicao
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento) Is Null) AND ((CadastroAcolhidos.AUTORIZAVisitas)=""Não"") AND ((CadastroAcolhidos.DataAcolhimento)<Date()-180) AND ((CadastroAcolhidos.NDestituicao) Is Null));
+"
+"ConsultaSomenteDesacolhidos","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.PaiAcolhido, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.MotivoAcolhimento, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.MotivoDesacolhimento, CadastroAcolhidos.NPedProv, CadastroAcolhidos.AtualizacaoFicha
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento)=[DataDesacolhimento]));
+"
+"ConsultaTelefonesUteis","0","SELECT [Telefones Uteis].[Instituicao], [Telefones Uteis].[Diretor/Responsavel], [Telefones Uteis].[Telefone], [Telefones Uteis].[Endereço], [Telefones Uteis].[Email], [Telefones Uteis].[Observações]
+FROM [Telefones Uteis];
+"
+"ConsultaTodosAcolhidosEntidade","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.EntidadeAcolhimento, CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento) Is Null))
+ORDER BY CadastroAcolhidos.NPedProv;
+"
+"Dados Ficha Casa Lar Dorcas","0","SELECT CadastroAcolhidos.CódigoAcolhido, CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.PaiAcolhido, CadastroAcolhidos.DataNascimentoAcolhido, CadastroAcolhidos.IdadeAcolhido, CadastroAcolhidos.DataAcolhimento, [Entidades de Acolhimento].NomeEntidade, CadastroAcolhidos.PeriodoAcolhimento, CadastroAcolhidos.MotivoAcolhimento, CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.NGuiaAcolhimento, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.AcolhidoEvadido, CadastroAcolhidos.DataEvasão, CadastroAcolhidos.AcolhidoDestituido, CadastroAcolhidos.DataDestituição, CadastroAcolhidos.DataTransito, CadastroAcolhidos.FaseProcessual, CadastroAcolhidos.ImpulsoProcessual, CadastroAcolhidos.Observações
+FROM CadastroAcolhidos INNER JOIN [Entidades de Acolhimento] ON CadastroAcolhidos.EntidadeAcolhimento = [Entidades de Acolhimento].NomeEntidade
+WHERE ((([Entidades de Acolhimento].NomeEntidade)=""Casa Lar Dorcas"") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Dados Fichas de Acompanhamento","0","SELECT fncIdadeCompleta(Nz([DataNascimentoAcolhido],0)) AS [Idade Completa], fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento], [Ficha Individual].NomeAcolhido, [Ficha Individual].MaeAcolhido, [Ficha Individual].PaiAcolhido, [Ficha Individual].DataNascimentoAcolhido, [Ficha Individual].DataAcolhimento, [Ficha Individual].EntidadeAcolhimento, [Ficha Individual].MotivoAcolhimento, [Ficha Individual].NPedProv, [Ficha Individual].NDestituicao, [Ficha Individual].NGuiaAcolhimento, [Ficha Individual].AcolhidoEvadido, [Ficha Individual].DataEvasão, [Ficha Individual].AcolhidoDestituido, [Ficha Individual].DataTransito, [Ficha Individual].FaseProcessual, [Ficha Individual].Observações, [Ficha Individual].ImpulsoProcessual, [Ficha Individual].DataDestituição, [Ficha Individual].AtualizacaoFicha
+FROM [Ficha Individual];
+"
+"Dados Fichas de Acompanhamento SEM Dest","0","SELECT fncIdadeCompleta(Nz([DataNascimentoAcolhido],0)) AS [Idade Completa], fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento], [Ficha Individual].NomeAcolhido, [Ficha Individual].MaeAcolhido, [Ficha Individual].PaiAcolhido, [Ficha Individual].DataNascimentoAcolhido, [Ficha Individual].DataAcolhimento, [Ficha Individual].EntidadeAcolhimento, [Ficha Individual].MotivoAcolhimento, [Ficha Individual].NPedProv, [Ficha Individual].NDestituicao, [Ficha Individual].NGuiaAcolhimento, [Ficha Individual].AcolhidoEvadido, [Ficha Individual].DataEvasão, [Ficha Individual].AcolhidoDestituido, [Ficha Individual].DataTransito, [Ficha Individual].FaseProcessual, [Ficha Individual].Observações, [Ficha Individual].ImpulsoProcessual, [Ficha Individual].DataDestituição, [Ficha Individual].FaseProcessual, [Ficha Individual].AtualizacaoFicha
+FROM [Ficha Individual]
+WHERE ((([Ficha Individual].NDestituicao) Is Null));
+"
+"Destituições atrasadas","0","SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.DataInicioDest, CadastroAcolhidos.DataDestituição
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento) Is Null) AND ((CadastroAcolhidos.DataInicioDest)<Date()-120) AND ((CadastroAcolhidos.DataDestituição) Is Null));
+"
+"Ficha Individual","0","SELECT CadastroAcolhidos.CódigoAcolhido, CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.PaiAcolhido, CadastroAcolhidos.DataNascimentoAcolhido, fncIdadeCompleta(Nz([DataNascimentoAcolhido],0)) AS [Idade Completa], CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.EntidadeAcolhimento, fncPeriodoAcolhimento(Nz([DataAcolhimento],0)) AS [Periodo Acolhimento], CadastroAcolhidos.MotivoAcolhimento, CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.NGuiaAcolhimento, CadastroAcolhidos.DataDesacolhimento, CadastroAcolhidos.AcolhidoEvadido, CadastroAcolhidos.DataEvasão, CadastroAcolhidos.DataRetorno, CadastroAcolhidos.MotivoDesacolhimento, CadastroAcolhidos.AcolhidoDestituido, CadastroAcolhidos.DataDestituição, CadastroAcolhidos.DataTransito, CadastroAcolhidos.AcolhidoAdotado, CadastroAcolhidos.DadosAdocao, CadastroAcolhidos.FaseProcessual, CadastroAcolhidos.ImpulsoProcessual, CadastroAcolhidos.Observações, CadastroAcolhidos.AtualizacaoFicha
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"ListaTodos","0","SELECT CadastroAcolhidos.NomeAcolhido
+FROM CadastroAcolhidos;
+"
+"Q_TotalDestituicoesSemSentenca","0","SELECT Count(*) AS TotalDestituicoes
+FROM (SELECT DISTINCT NDestituicao
+    FROM CadastroAcolhidos
+    WHERE DataDesacolhimento Is Null
+      AND DataDestituição Is Null
+      AND NDestituicao Is Not Null
+      AND NDestituicao <> ''
+)  AS Destituicoes;
+"
+"Q_TotalMedidasSemDestituicao","0","SELECT Count(*) AS TotalMedidas
+FROM (SELECT DISTINCT NPedProv
+    FROM CadastroAcolhidos
+    WHERE DataDesacolhimento Is Null
+      AND NPedProv Is Not Null
+      AND NPedProv <> ''
+      AND (NDestituicao Is Null OR NDestituicao = '')
+)  AS Medidas;
+"
+"Q_TotalProcessosEmAndamento","0","SELECT Count(*) AS TotalProcessos
+FROM (SELECT DISTINCT NPedProv AS Processo
+    FROM CadastroAcolhidos
+    WHERE DataDesacolhimento Is Null
+      AND NPedProv Is Not Null
+      AND NPedProv <> ''
+    UNION
+    SELECT DISTINCT NDestituicao AS Processo
+    FROM CadastroAcolhidos
+    WHERE DataDesacolhimento Is Null
+      AND NDestituicao Is Not Null
+      AND NDestituicao <> ''
+)  AS Processos;
+"
+"Q_TotalProcessosGeral","0","SELECT Count(*) AS TotalProcessos
+FROM (SELECT DISTINCT NPedProv AS Processo
+    FROM CadastroAcolhidos
+    WHERE NPedProv Is Not Null
+      AND NPedProv <> ''
+    UNION
+    SELECT DISTINCT NDestituicao AS Processo
+    FROM CadastroAcolhidos
+    WHERE NDestituicao Is Not Null
+      AND NDestituicao <> ''
+)  AS Processos;
+"
+"REAVALIACOES PARESCON","0","SELECT CadastroAcolhidos.NPedProv, CadastroAcolhidos.NDestituicao, CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.EntidadeAcolhimento, CadastroAcolhidos.PARESCON, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos
+WHERE (((CadastroAcolhidos.NDestituicao) Is Null) AND ((CadastroAcolhidos.PARESCON)=""SIM"") AND ((CadastroAcolhidos.DataDesacolhimento) Is Null));
+"
+"Total6MSEMVisitas","0","SELECT Count(ConsultaSEMVisitas6meses.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM ConsultaSEMVisitas6meses;
+"
+"TotalDesacolhidos","0","SELECT Count(ConsultaSomenteDesacolhidos.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM ConsultaSomenteDesacolhidos;
+"
+"TotalDestituições atrasadas","0","SELECT Count([Destituições atrasadas].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [Destituições atrasadas];
+"
+"TotalDestituiçõesAndamento","0","SELECT Count([Consulta Destituições em Andamento].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [Consulta Destituições em Andamento];
+"
+"TotalDestituidos","0","SELECT Count([Consulta Destituidos].[NomeAcolhido]) AS ContarDeNomeAcolhido
+FROM [Consulta Destituidos];
+"
+"TotalDestituidosTransito","0","SELECT Count([Consulta Destituidos com transito].[NomeAcolhido]) AS ContarDeNomeAcolhido
+FROM [Consulta Destituidos com transito];
+"
+"TotalGERAL-Des-Acol","0","SELECT Count([ConsultaGERAL-Des-Acol].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [ConsultaGERAL-Des-Acol];
+"
+"TotalInseridosPARESCON","0","SELECT Count([Consulta inseridos PARESCON].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [Consulta inseridos PARESCON];
+"
+"TotalSEMDestituição","0","SELECT Count(CadastroSEMDestituicao.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM CadastroSEMDestituicao;
+"
+"TotalTodosAcolhidos","0","SELECT Count(ConsultaQuantosAcolhidosTODOS.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM ConsultaQuantosAcolhidosTODOS;
+"
+"TotalVisitasINDEFERIDAS","0","SELECT Count([Consulta VISITAS INDEFERIDAS].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [Consulta VISITAS INDEFERIDAS];
+"
+"TotalVisitasSemDecisao","0","SELECT Count([Consulta VISITAS SEM DECISAO].NomeAcolhido) AS ContarDeNomeAcolhido
+FROM [Consulta VISITAS SEM DECISAO];
+"

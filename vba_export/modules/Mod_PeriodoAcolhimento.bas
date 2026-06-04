@@ -2,7 +2,7 @@ Option Compare Database
 
 
 Public Function fncPeriodoAcolhimento(DataAcolhimento As Date) As String
-On Error GoTo trataerro
+On Error GoTo TrataErro
 Dim Anos As Byte, Meses As Variant, Dias As Byte, DataRef As Date
 If DataAcolhimento > Date Or DataAcolhimento = 0 Then
     fncPeriodoAcolhimento = ""
@@ -23,7 +23,7 @@ fncPeriodoAcolhimento = IIf(Anos <= 1, IIf(Anos = 0, "", Anos & " ano "), Anos &
                    IIf(Dias <= 1, IIf(Dias = 0, "", Dias & " dia "), Dias & " dias ")
 sair:
     Exit Function
-trataerro:
+TrataErro:
     MsgBox "Erro: " & Err.Number & vbCrLf & Err.Description, vbCritical, "Aviso", Err.HelpFile, Err.HelpContext
     Resume sair:
 End Function

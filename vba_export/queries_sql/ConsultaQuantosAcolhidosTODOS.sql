@@ -1,0 +1,3 @@
+﻿SELECT ConsultaTodosAcolhidosEntidade.NomeAcolhido, ConsultaTodosAcolhidosEntidade.DataDesacolhimento
+FROM ConsultaTodosAcolhidosEntidade
+WHERE (((ConsultaTodosAcolhidosEntidade.DataDesacolhimento) Is Null));

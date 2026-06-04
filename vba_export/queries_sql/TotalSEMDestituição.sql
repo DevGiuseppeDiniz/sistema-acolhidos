@@ -1,0 +1,2 @@
+﻿SELECT Count(CadastroSEMDestituicao.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM CadastroSEMDestituicao;

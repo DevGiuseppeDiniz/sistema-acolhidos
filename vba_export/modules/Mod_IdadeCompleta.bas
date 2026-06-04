@@ -1,7 +1,7 @@
 Option Compare Database
 
 Public Function fncIdadeCompleta(DataNascimentoAcolhido As Date) As String
-On Error GoTo trataerro
+On Error GoTo TrataErro
 Dim Anos As Byte, Meses As Variant, Dias As Byte, DataRef As Date
 If DataNascimentoAcolhido > Date Or DataNascimentoAcolhido = 0 Then
     fncIdadeCompleta = ""
@@ -22,7 +22,7 @@ fncIdadeCompleta = IIf(Anos <= 1, IIf(Anos = 0, "", Anos & " ano "), Anos & " an
                    IIf(Dias <= 1, IIf(Dias = 0, "", Dias & " dia "), Dias & " dias ")
 sair:
     Exit Function
-trataerro:
+TrataErro:
     MsgBox "Erro: " & Err.Number & vbCrLf & Err.Description, vbCritical, "Aviso", Err.HelpFile, Err.HelpContext
     Resume sair:
 End Function

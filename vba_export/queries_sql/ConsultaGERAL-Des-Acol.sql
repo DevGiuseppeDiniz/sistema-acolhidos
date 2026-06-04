@@ -1,0 +1,2 @@
+﻿SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.MaeAcolhido, CadastroAcolhidos.DataAcolhimento, CadastroAcolhidos.DataDesacolhimento
+FROM CadastroAcolhidos;

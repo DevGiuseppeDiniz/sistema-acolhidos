@@ -1,0 +1,2 @@
+﻿SELECT Count(ConsultaQuantosAcolhidosTODOS.NomeAcolhido) AS ContarDeNomeAcolhido
+FROM ConsultaQuantosAcolhidosTODOS;

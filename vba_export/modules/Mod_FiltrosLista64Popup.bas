@@ -131,11 +131,7 @@ Private Function ConsultaBaseLista64(ByVal nomeForm As String) As String
 End Function
 
 Private Function ValorSql(ByVal valor As Variant) As String
-    If IsNumeric(valor) Then
-        ValorSql = Replace(CStr(valor), ",", ".")
-    Else
-        ValorSql = "'" & Replace(CStr(valor), "'", "''") & "'"
-    End If
+    ValorSql = "'" & Replace(CStr(valor), "'", "''") & "'"
 End Function
 
 Private Sub DefinirTempVar(ByVal nome As String, ByVal valor As Variant)

@@ -99,6 +99,17 @@ Private Sub AtualizarLista64(ByVal frmOrigem As Form, ByVal rowSourceLista As St
         .RowSource = rowSourceLista
         .Requery
     End With
+
+    AtualizarTotalLista64 frmOrigem
+End Sub
+
+Private Sub AtualizarTotalLista64(ByVal frmOrigem As Form)
+On Error Resume Next
+
+    With frmOrigem.Controls("Lista106")
+        .RowSource = "SELECT " & CStr(frmOrigem.Controls("Lista64").ListCount) & " AS TotalRegistros;"
+        .Requery
+    End With
 End Sub
 
 Private Function ConsultaBaseLista64(ByVal nomeForm As String) As String

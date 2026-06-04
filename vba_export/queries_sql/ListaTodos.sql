@@ -1,2 +1,2 @@
-﻿SELECT CadastroAcolhidos.NomeAcolhido
+﻿SELECT CadastroAcolhidos.NomeAcolhido, CadastroAcolhidos.EntidadeAcolhimento
 FROM CadastroAcolhidos;

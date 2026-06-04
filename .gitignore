@@ -11,6 +11,8 @@
 Relatorios_Fichas/
 Backups - Controle Acolhidos/
 access_analysis/
+incoming_bases/
+incoming_analysis/
 
 # Local/editor files
 .vscode/

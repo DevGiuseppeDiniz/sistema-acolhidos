@@ -99,7 +99,19 @@ function Compare-ExportTrees([string]$ReferencePath, [string]$CandidatePath, [st
         if ($refHash -ne $candHash) {
             $changed += $relative
             $diffFile = Join-Path $DiffPath ((Safe-Name $relative) + ".diff.txt")
-            git diff --no-index -- $referenceFiles[$relative] $candidateFiles[$relative] *> $diffFile
+            $refLines = [System.IO.File]::ReadAllLines($referenceFiles[$relative])
+            $candLines = [System.IO.File]::ReadAllLines($candidateFiles[$relative])
+            $diffOutput = Compare-Object -ReferenceObject $refLines -DifferenceObject $candLines -SyncWindow 3 |
+                Select-Object -First 1000 |
+                ForEach-Object {
+                    if ($_.SideIndicator -eq "<=") { "- " + $_.InputObject }
+                    elseif ($_.SideIndicator -eq "=>") { "+ " + $_.InputObject }
+                    else { "  " + $_.InputObject }
+                }
+            if (-not $diffOutput) {
+                $diffOutput = @("Arquivo alterado, mas sem diferenca textual gerada.")
+            }
+            $diffOutput | Set-Content -Encoding UTF8 $diffFile
         }
     }
 
